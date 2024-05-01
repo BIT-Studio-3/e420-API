@@ -10,19 +10,60 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum SystemType {
+  RED_STAR
+  YOUNG_STAR
+  UNSTABLE
+  NEUTRON_STAR
+  ORANGE_STAR
+  BLUE_STAR
+  WHITE_DWARF
+  NEBULA
+}
+
+enum WaypointType {
+  PLANET
+  MOON
+  ASTEROID
+  GAS_GIANT
+}
+
+enum Trait {
+  UNCHARTED
+  MARKETPLACE
+  SHIPYARD
+  OUTPOST
+  OCEAN
+  BARREN
+  FROZEN
+  SPRAWLING_CITIES
+}
+
 model System {
   id              Int         @id @default(autoincrement())
   name            String      @unique
+  type            String
   waypoints       Waypoint[]
+}
+
+model Waypoint {
+  id              Int         @id @default(autoincrement())
+  name            String      @unique
+  type            Type      
+  traits          Trait[]
+  systemId        Int
+  system          System      @relation(fields: [systemId], references [id])  
 }
 
 model User {
   id              Int         @id @default(autoincrement())
   username        String      @unique
   password        String
+  credits         Int
   ships           Ship[]
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @updatedAt
+  shipCount       Int
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
 }
 
 model Shipyard {
