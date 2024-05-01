@@ -1,0 +1,45 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model System {
+  id              Int         @id @default(autoincrement())
+  name            String      @unique
+  waypoints       Waypoint[]
+}
+
+model User {
+  id              Int         @id @default(autoincrement())
+  username        String      @unique
+  password        String
+  ships           Ship[]
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+}
+
+model Shipyard {
+  id              Int         @id @default(autoincrement())
+  name            String      @unique
+  ships           Ship[]
+  waypointId      Int
+  waypoint        Waypoint    @relation(fields: [waypointId], references: [id])
+}
+
+model Ship {
+  id              Int         @id @default(autoincrement())
+  name            String      @unique
+  shipyardId      Int
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  shipyard        Shipyard     @relation(fields: [shipyardId], references [id])
+}
+
+
