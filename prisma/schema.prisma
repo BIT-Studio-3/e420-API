@@ -51,8 +51,9 @@ model Waypoint {
   name            String      @unique
   type            WaypointType      
   traits          Trait[]
+  shipyard        Shipyard?
   systemId        Int
-  system          System      @relation(fields: [systemId], references [id])  
+  system          System      @relation(fields: [systemId], references: [id], onDelete: Cascade)  
 }
 
 model User {
@@ -68,15 +69,15 @@ model Shipyard {
   id              Int         @id @default(autoincrement())
   name            String      @unique
   ships           Ship[]
-  waypointId      Int
-  waypoint        Waypoint    @relation(fields: [waypointId], references: [id])
+  waypointId      Int         @unique
+  waypoint        Waypoint    @relation(fields: [waypointId], references: [id], onDelete: Cascade)
 }
 
 model Ship {
   id              Int         @id @default(autoincrement())
   name            String      @unique
-  shipyardId      Int
-  shipyard        Shipyard     @relation(fields: [shipyardId], references [id])
+  owner           String?
+  shipyardId      Int?
+  shipyard        Shipyard?    @relation(fields: [shipyardId], references: [id])
+  user            User?       @relation(fields: [owner], references: [username])
 }
-
-
