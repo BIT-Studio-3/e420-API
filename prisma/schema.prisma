@@ -42,14 +42,14 @@ enum Trait {
 model System {
   id              Int         @id @default(autoincrement())
   name            String      @unique
-  type            String
+  type            SystemType
   waypoints       Waypoint[]
 }
 
 model Waypoint {
   id              Int         @id @default(autoincrement())
   name            String      @unique
-  type            Type      
+  type            WaypointType      
   traits          Trait[]
   systemId        Int
   system          System      @relation(fields: [systemId], references [id])  
@@ -61,9 +61,7 @@ model User {
   password        String
   credits         Int
   ships           Ship[]
-  shipCount       Int
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
+  shipCount       Int         @default(0)
 }
 
 model Shipyard {
@@ -78,8 +76,6 @@ model Ship {
   id              Int         @id @default(autoincrement())
   name            String      @unique
   shipyardId      Int
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @updatedAt
   shipyard        Shipyard     @relation(fields: [shipyardId], references [id])
 }
 
