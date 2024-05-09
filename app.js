@@ -17,11 +17,18 @@ app.use(json());
 // Use the CORS module
 app.use(cors());
 
-// Create routes
-
 // Use the routes module
 app.use('/', homeRoutes);
 app.use('/api/agents', agentRoutes);
+
+
+app.use((req, res, next) => {
+  next(
+    res.status(404).json({
+      msg: "404 route not found",
+    }),
+  );
+});
 
 // Start the server on port 3000
 app.listen(3000, () => {
