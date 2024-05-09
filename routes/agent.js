@@ -8,7 +8,7 @@ import * as resources from "../controllers/agent.js";
 const router = express.Router();
 
 // Create a GET route
-router.get("/", resources);
+router.post("/", resources.register);
 
 // Export the router
 export default router;

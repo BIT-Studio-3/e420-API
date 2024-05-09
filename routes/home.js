@@ -8,7 +8,7 @@ import * as resources from "../controllers/home.js";
 const router = express.Router();
 
 // Create a GET route
-router.get("/", resources);
+// router.get("/", resources);
 
 // Export the router
 export default router;
