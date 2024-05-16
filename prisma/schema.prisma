@@ -28,6 +28,12 @@ enum WaypointType {
   GAS_GIANT
 }
 
+enum ContractType {
+  PROCUREMENT
+  TRANSPORT
+  SHUTTLE
+}
+
 enum Trait {
   UNCHARTED
   MARKETPLACE
@@ -78,6 +84,33 @@ model Ship {
   name            String      @unique
   owner           String?
   shipyardId      Int?
-  shipyard        Shipyard?    @relation(fields: [shipyardId], references: [id])
+  shipyard        Shipyard?   @relation(fields: [shipyardId], references: [id])
   user            User?       @relation(fields: [owner], references: [username])
+}
+
+model Contract {
+  id                Int             @id @default(autoincrement())
+  type              ContractType
+  terms             ContractTerms
+  accepted          Boolean
+  fulfilled         Boolean
+  deadlineToAccept  String
+}
+
+model ContractDeliverable {
+  termsId             Int
+  tradeSymbol         String
+  destinationSymbol   Waypoint
+}
+
+model ContractPayment {
+  termsId         Int
+  onAccepted      Int
+  onFulfilled     Int
+}
+
+model ContractTerms {
+  deadline        String
+  payment         ContractPayment
+  deliver         ContractDeliverable
 }
