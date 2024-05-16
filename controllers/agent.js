@@ -31,6 +31,15 @@ const register = async (req, res) => {
       });
     }
 
+    // Check if user with given details already exists
+    let user = await prisma.user.findUnique({
+      where: { username: username },
+    });
+
+    if (user) return res.status(409).json({ msg: "User already exists" });
+
+    
+
     // Return success or error message
     return res.status(201).json({
       msg: "User successfully registered",
