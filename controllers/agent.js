@@ -11,16 +11,12 @@ const register = async (req, res) => {
       data: {
         password,
         username,
-        confirm_password
+        confirm_password,
       },
     });
 
     // Define an array of required fields
-    const requiredFields = [
-      "username",
-      "password",
-      "confirm_password",
-    ];
+    const requiredFields = ["username", "password", "confirm_password"];
 
     // Check if all required fields are provided
     const missingFields = requiredFields.filter((field) => !req.body[field]);
@@ -37,8 +33,6 @@ const register = async (req, res) => {
     });
 
     if (user) return res.status(409).json({ msg: "User already exists" });
-
-    
 
     // Return success or error message
     return res.status(201).json({
