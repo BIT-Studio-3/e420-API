@@ -6,8 +6,8 @@ const createContract = async (req, res) => {
     // Store given data
     const { type, deadline, payment, cargo, contractId, destinationSymbol, deadlineToAccept } = req.body;
 
-    // Create new user with the given data
-    user = await prisma.user.create({
+    // Create new contract with the given data
+    const contract = await prisma.contract.create({
       data: {
         type,
         terms: {
