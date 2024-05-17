@@ -8,7 +8,7 @@
     "dev": "nodemon app.js",
     "mig": "npx prisma migrate dev",
     "reset": "npx prisma migrate reset",
-    "dbres": "npx prisma db push --force-reset && npx prisma db seed"
+    "dbres": "npx prisma db push --force-reset"
   },
   "type": "module",
   "keywords": [],

@@ -58,6 +58,7 @@ model Waypoint {
   type            WaypointType      
   traits          Trait[]
   shipyard        Shipyard?
+  destinations    Contract[]
   systemId        Int
   system          System      @relation(fields: [systemId], references: [id], onDelete: Cascade)  
 }
@@ -89,28 +90,21 @@ model Ship {
 }
 
 model Contract {
-  id                Int             @id @default(autoincrement())
-  type              ContractType
-  terms             ContractTerms
-  accepted          Boolean
-  fulfilled         Boolean
-  deadlineToAccept  String
-}
-
-model ContractDeliverable {
-  termsId             Int
-  tradeSymbol         String
-  destinationSymbol   Waypoint
-}
-
-model ContractPayment {
-  termsId         Int
-  onAccepted      Int
-  onFulfilled     Int
+  id                  Int             @id @default(autoincrement())
+  type                ContractType
+  terms               ContractTerms[]
+  destinationSymbol   String
+  accepted            Boolean
+  fulfilled           Boolean
+  deadlineToAccept    String
+  destination         Waypoint        @relation(fields: [destinationSymbol], references: [name])
 }
 
 model ContractTerms {
-  deadline        String
-  payment         ContractPayment
-  deliver         ContractDeliverable
+  id                  Int             @id @default(autoincrement())
+  deadline            String
+  payment             Int
+  cargo               String
+  contractId          Int
+  contract            Contract        @relation(fields: [contractId], references: [id])
 }
