@@ -94,8 +94,8 @@ model Contract {
   type                ContractType
   terms               ContractTerms[]
   destinationSymbol   String
-  accepted            Boolean
-  fulfilled           Boolean
+  accepted            Boolean         @default(false)
+  fulfilled           Boolean         @default(false)
   deadlineToAccept    String
   destination         Waypoint        @relation(fields: [destinationSymbol], references: [name])
 }
