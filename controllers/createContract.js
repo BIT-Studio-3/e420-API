@@ -4,11 +4,12 @@ const prisma = new PrismaClient();
 const createContract = async (req, res) => {
   try {
     // Store given data
-    const { type, deadline, payment, cargo, contractId, destinationSymbol, deadlineToAccept } = req.body;
+    const { userId, type, deadline, payment, cargo, contractId, destinationSymbol, deadlineToAccept } = req.body;
 
     // Create new contract with the given data
     const contract = await prisma.contract.create({
       data: {
+        userId,
         type,
         terms: {
             create: [
