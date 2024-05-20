@@ -69,6 +69,7 @@ model User {
   password        String
   credits         Int         @default(100000)
   ships           Ship[]
+  contracts       Contract[]
   shipCount       Int         @default(0)
 }
 
@@ -91,12 +92,14 @@ model Ship {
 
 model Contract {
   id                  Int             @id @default(autoincrement())
+  userId              Int
   type                ContractType
   terms               ContractTerms[]
   destinationSymbol   String
   accepted            Boolean         @default(false)
   fulfilled           Boolean         @default(false)
   deadlineToAccept    String
+  user                User            @relation(fields: [userId], references: [id])
   destination         Waypoint        @relation(fields: [destinationSymbol], references: [name])
 }
 
