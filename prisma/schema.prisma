@@ -28,6 +28,12 @@ enum WaypointType {
   GAS_GIANT
 }
 
+enum ContractType {
+  PROCUREMENT
+  TRANSPORT
+  SHUTTLE
+}
+
 enum Trait {
   UNCHARTED
   MARKETPLACE
@@ -52,6 +58,7 @@ model Waypoint {
   type            WaypointType      
   traits          Trait[]
   shipyard        Shipyard?
+  destinations    Contract[]
   systemId        Int
   system          System      @relation(fields: [systemId], references: [id], onDelete: Cascade)  
 }
@@ -62,6 +69,7 @@ model User {
   password        String
   credits         Int         @default(100000)
   ships           Ship[]
+  contracts       Contract[]
   shipCount       Int         @default(0)
 }
 
@@ -78,6 +86,28 @@ model Ship {
   name            String      @unique
   owner           String?
   shipyardId      Int?
-  shipyard        Shipyard?    @relation(fields: [shipyardId], references: [id])
+  shipyard        Shipyard?   @relation(fields: [shipyardId], references: [id])
   user            User?       @relation(fields: [owner], references: [username])
+}
+
+model Contract {
+  id                  Int             @id @default(autoincrement())
+  userId              Int
+  type                ContractType
+  terms               ContractTerms[]
+  destinationSymbol   String
+  accepted            Boolean         @default(false)
+  fulfilled           Boolean         @default(false)
+  deadlineToAccept    String
+  user                User            @relation(fields: [userId], references: [id])
+  destination         Waypoint        @relation(fields: [destinationSymbol], references: [name])
+}
+
+model ContractTerms {
+  id                  Int             @id @default(autoincrement())
+  deadline            String
+  payment             Int
+  cargo               String
+  contractId          Int
+  contract            Contract        @relation(fields: [contractId], references: [id])
 }
