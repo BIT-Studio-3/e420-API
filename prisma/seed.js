@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client"
 
-const seeds = ["./data/01-systemSeed.js", "./data/02-waypointSeed.js"]
+const seeds = ["./data/01-systemSeed.js"]
 const prisma = new PrismaClient()
 
 const seed = async () => {

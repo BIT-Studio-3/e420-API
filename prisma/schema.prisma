@@ -51,9 +51,17 @@ model Waypoint {
   name            String      @unique
   type            WaypointType      
   traits          Trait[]
-  shipyard        Shipyard?
+  shipyard        Shipyard[]
   systemId        Int
   system          System      @relation(fields: [systemId], references: [id], onDelete: Cascade)  
+}
+
+model Trait {
+  symbol          String      @unique
+  name            String
+  description     String
+  waypointId      Int
+  waypoint        
 }
 
 model User {
