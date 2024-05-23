@@ -57,7 +57,7 @@ model Waypoint {
   name            String      @unique
   type            WaypointType      
   traits          Trait[]
-  shipyard        Shipyard?
+  shipyard        Shipyard[]
   destinations    Contract[]
   systemId        Int
   system          System      @relation(fields: [systemId], references: [id], onDelete: Cascade)  
