@@ -53,8 +53,6 @@ const register = async (req, res) => {
       },
     });
 
-    delete user.password;
-
     // Return success or error message
     return res.status(201).json({
       msg: "User successfully registered",
