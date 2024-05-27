@@ -14,7 +14,16 @@ const login = async (req, res) => {
 
     const { username, password } = req.body;
 
+    // Check if given data is used already by another user
+    const user = await prisma.user.findUnique({
+      where: { username },
+    });
 
+    if (!user) return res.status(401).json({ msg: "Invalid username" });
+
+    return res.status(200).json({
+      msg: `${user.username} has successfully logged in`,
+    });
   } catch (err) {
     return res.status(500).json({
       msg: err.message,
