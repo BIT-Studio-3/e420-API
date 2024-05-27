@@ -12,16 +12,7 @@ const register = async (req, res) => {
     }
 
     // Store given data
-    const { password, username } = req.body;
-
-    // Create new user with the given data
-    user = await prisma.user.create({
-      data: {
-        password,
-        username,
-        confirm_password,
-      },
-    });
+    const { username, password } = req.body;
 
     // Define an array of required fields
     const requiredFields = ["username", "password", "confirm_password"];
@@ -35,12 +26,34 @@ const register = async (req, res) => {
       });
     }
 
+    if (confirm_password != password)
+      return res.status(400).json({ msg: "Passwords do not match" });
+
     // Check if user with given details already exists
     let user = await prisma.user.findUnique({
       where: { username: username },
     });
 
     if (user) return res.status(409).json({ msg: "User already exists" });
+
+    // Generate random bits to add to password to make it unique
+    const salt = await bcryptjs.genSalt();
+
+    /**
+     * Generate a hash for a given string + salt
+     */
+
+    const hashedPassword = await bcryptjs.hash(password, salt);
+
+    // Create new user with the given data
+    user = await prisma.user.create({
+      data: {
+        username,
+        password: hashedPassword,
+      },
+    });
+
+    delete user.password;
 
     // Return success or error message
     return res.status(201).json({
