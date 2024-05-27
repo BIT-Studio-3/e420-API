@@ -1,8 +1,16 @@
+import bcryptjs from "bcryptjs";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 const register = async (req, res) => {
   try {
+    const contentType = req.headers["content-type"];
+    if (!contentType || contentType !== "application/json") {
+      return res.status(400).json({
+        msg: "Invalid Content-Type. Expected application/json",
+      });
+    }
+
     // Store given data
     const { password, username } = req.body;
 
