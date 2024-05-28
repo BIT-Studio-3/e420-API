@@ -21,14 +21,31 @@ const login = async (req, res) => {
 
     if (!user) return res.status(401).json({ msg: "Invalid username" });
 
-    // Compare given string with the returned hash 
+    // Compare given string with the returned hash
     const isPasswordCorrect = await bcryptjs.compare(password, user.password);
 
     if (!isPasswordCorrect)
       return res.status(401).json({ msg: "Invalid password" });
 
+    const { JWT_SECRET, JWT_LIFETIME } = process.env;
+
+    /**
+     * Return a JWT. The first argument is the payload, i.e., an object containing
+     * the authenticated user's id and name, the second argument is the secret
+     * or public/private key, and the third argument is the lifetime of the JWT
+     */
+    const token = jwt.sign(
+      {
+        id: user.id,
+        name: user.name,
+      },
+      JWT_SECRET,
+      { expiresIn: JWT_LIFETIME }
+    );
+
     return res.status(200).json({
       msg: `${user.username} has successfully logged in`,
+      token: token,
     });
   } catch (err) {
     return res.status(500).json({
