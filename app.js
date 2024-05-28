@@ -20,8 +20,8 @@ app.use(cors());
 
 // Use the routes module
 app.use('/', homeRoutes);
-app.use('/api/agents', agentRoutes);
-app.use('/api/contracts', contractRoutes);
+app.use('/api/agents', agentRoutes); //add auth
+app.use('/api/contracts', contractRoutes); //add auth
 
 // Sets 404 error message if request contains an invalid route and sends to next middleware function in the stack
 app.use((req, res, next) => {
