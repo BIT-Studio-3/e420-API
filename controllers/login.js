@@ -21,6 +21,12 @@ const login = async (req, res) => {
 
     if (!user) return res.status(401).json({ msg: "Invalid username" });
 
+    // Compare given string with the returned hash 
+    const isPasswordCorrect = await bcryptjs.compare(password, user.password);
+
+    if (!isPasswordCorrect)
+      return res.status(401).json({ msg: "Invalid password" });
+
     return res.status(200).json({
       msg: `${user.username} has successfully logged in`,
     });
