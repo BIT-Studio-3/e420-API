@@ -3,8 +3,18 @@ const prisma = new PrismaClient();
 
 const getAgents = async (req, res) => {
     try {
+      const { name }= req.query;
+      const filterOptions = {
+        where: {},
+      };
+
+      if (name) {
+        filterOptions.where.name = {
+          contains: name.toString(),
+        };
+      }
         //fetch all agents from the database
-      const agents = await prisma.user.findMany({});
+      const agents = await prisma.user.findMany(filterOptions);
 
         //if no agents are found return a 404 error
       if (agents.length === 0) {
