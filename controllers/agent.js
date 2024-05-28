@@ -3,11 +3,12 @@ const prisma = new PrismaClient();
 
 const getAgents = async (req, res) => {
     try {
+      //extracting query parameters, can be more than one but in this case its just {name}
       const { name }= req.query;
       const filterOptions = {
         where: {},
       };
-
+      //filtering condition, based on query parameters
       if (name) {
         filterOptions.where.name = {
           contains: name.toString(),
