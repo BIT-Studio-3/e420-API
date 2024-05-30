@@ -2,40 +2,29 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 const getAgents = async (req, res) => {
-  // try {
-  //   const query = {
-  //     include: {
-  //       departments: true,
-  //     },
-  //   };
-
-  //   if (req.query.username || req.query.credits || req.query.ships || req.query.contracts || req.query.shipCount) {
-  //     query.where = {
-  //       username: {
-  //         equals: req.query.username || undefined,
-  //       },
-  //       credits: {
-  //         equals: req.query.region || undefined,
-  //       },
-  //       country: {
-  //         equals: req.query.country || undefined,
-  //       },
-  //     };
-  //   }  
-  
   try {
-      //extracting query parameters, can be more than one but in this case its just {name}
-      const { name }= req.query;
-      const filterOptions = {
-        where: {},
+    const query = {
+     username,
+  //    ...rest of rows,
+     include: {
+        ships: true,
+        contracts: true,
+      },
+    };
+
+    if (req.query.username || req.query.credits || req.query.ships || req.query.contracts || req.query.shipCount) {
+      query.where = {
+        username: {
+          equals: req.query.username || undefined,
+        },
+        credits: {
+          equals: req.query.credits || undefined,
+        },
+        ships: {
+          equals: req.query.ships || undefined,
+        },
       };
-      //filtering condition, based on query parameters
-      if (name) {
-        filterOptions.where.name = {
-          contains: name.toString(),
-        };
-      }
-        //fetch all agents from the database
+    }  
       const agents = await prisma.user.findMany(filterOptions);
 
         //if no agents are found return a 404 error
