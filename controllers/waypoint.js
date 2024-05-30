@@ -1,11 +1,14 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
+/**
+ * Retrieves all waypoints in the database and returns the waypoint objects
+ */
 const getWaypoints = async (req, res) => {
   try {
     //fetch all waypoints from the database
     const waypoints = await prisma.waypoint.findMany({
-      include: { 
+      include: {
         traits: true,
         shipyard: true,
         destinations: true,
@@ -21,6 +24,8 @@ const getWaypoints = async (req, res) => {
     return res
       .status(200)
       .json({ msg: "Successfully fetched all waypoints", data: waypoints });
+      
+    // Handle errors by returning a 500 error with the error message
   } catch (err) {
     return res.status(500).json({
       msg: err.message,
