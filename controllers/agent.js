@@ -2,7 +2,28 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 const getAgents = async (req, res) => {
-    try {
+  // try {
+  //   const query = {
+  //     include: {
+  //       departments: true,
+  //     },
+  //   };
+
+  //   if (req.query.username || req.query.credits || req.query.ships || req.query.contracts || req.query.shipCount) {
+  //     query.where = {
+  //       username: {
+  //         equals: req.query.username || undefined,
+  //       },
+  //       credits: {
+  //         equals: req.query.region || undefined,
+  //       },
+  //       country: {
+  //         equals: req.query.country || undefined,
+  //       },
+  //     };
+  //   }  
+  
+  try {
       //extracting query parameters, can be more than one but in this case its just {name}
       const { name }= req.query;
       const filterOptions = {
