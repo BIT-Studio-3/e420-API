@@ -1,4 +1,4 @@
-const name = "system";
+const name = "Waypoint";
 const data = [
   {
     name: "Grindelia Papposa",
@@ -91,3 +91,4 @@ const data = [
     systemId: 10,
   },
 ];
+export { name, data };
