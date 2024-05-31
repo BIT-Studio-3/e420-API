@@ -4,15 +4,14 @@ const prisma = new PrismaClient();
 const getAgents = async (req, res) => {
   try {
     const query = {
-     username,
-  //    ...rest of rows,
+     username, credits, ships, contracts, shipCount,           
      include: {
         ships: true,
         contracts: true,
       },
     };
 
-    if (req.query.username || req.query.credits || req.query.ships || req.query.contracts || req.query.shipCount) {
+    if (username || credits || ships || contracts || shipCount) {
       query.where = {
         username: {
           equals: req.query.username || undefined,
