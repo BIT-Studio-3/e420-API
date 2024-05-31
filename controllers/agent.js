@@ -22,9 +22,15 @@ const getAgents = async (req, res) => {
         ships: {
           equals: req.query.ships || undefined,
         },
+        contracts: {
+          equals: req.query.contracts || undefined,
+        },
+        shipCount: {
+          equals: req.query.contracts || undefined,
+        }
       };
     }  
-      const agents = await prisma.user.findMany(filterOptions);
+      const agents = await prisma.user.findMany(query);
 
         //if no agents are found return a 404 error
       if (agents.length === 0) {
