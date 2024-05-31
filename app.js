@@ -8,6 +8,7 @@ import cors from 'cors';
 import homeRoutes from './routes/home.js';
 import agentRoutes from './routes/agent.js';
 import contractRoutes from './routes/contract.js';
+import systemRoutes from './routes/test.js';
 
 // Create an Express application
 const app = express();
@@ -22,6 +23,7 @@ app.use(cors());
 app.use('/', homeRoutes);
 app.use('/api/agents', agentRoutes); //add auth
 app.use('/api/contracts', contractRoutes); //add auth
+app.use('/api/systems', systemRoutes); //add auth
 
 // Sets 404 error message if request contains an invalid route and sends to next middleware function in the stack
 app.use((req, res, next) => {
