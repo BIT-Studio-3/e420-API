@@ -9,8 +9,8 @@ import * as SystemResources from "../controllers/system.js";
 const router = express.Router();
 
 // Create a GET route
-router.get("/", (req, res) => SystemResources.getSystems(req, res));
-router.get("/", (req, res) => WaypointResources.getWaypoints(req, res));
+router.get("/systems", (req, res) => SystemResources.getSystems(req, res));
+router.get("/waypoints", (req, res) => WaypointResources.getWaypoints(req, res));
 
 // Export the router
 export default router;
