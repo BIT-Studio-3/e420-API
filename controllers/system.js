@@ -6,10 +6,21 @@ const prisma = new PrismaClient();
  */
 const getSystems = async (req, res) => {
   try {
-    //fetch all systems from the database
-    const systems = await prisma.system.findMany({
+    // Extract query filters if any
+    const filters = req.query.filters ? JSON.parse(req.query.filters) : {};
+
+    // Order by whatever the user specifies
+    const orderBy = req.query.orderBy;
+
+    // Change query to include filters, order, and waypoint objects
+    const query = {
+      where: filters,
+      orderBy: orderBy ? JSON.parse(orderBy) : undefined,
       include: { waypoints: true },
-    });
+    };
+
+    // fetch all systems from the database
+    const systems = await prisma.system.findMany(query);
 
     //if no systems are found return a 404 error
     if (systems.length === 0) {
