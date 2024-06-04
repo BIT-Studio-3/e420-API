@@ -25,6 +25,7 @@ app.use('/api/contracts', contractRoutes); //add auth
 app.use('/api/location', locationRoutes); //add auth
 app.use('/api/auth', authRoutes);
 
+
 // Sets 404 error message if request contains an invalid route and sends to next middleware function in the stack
 app.use((req, res, next) => {
   next(
