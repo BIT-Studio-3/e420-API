@@ -9,6 +9,7 @@ import homeRoutes from './routes/home.js';
 import agentRoutes from './routes/agent.js';
 import contractRoutes from './routes/contract.js';
 import mapRoutes from './routes/map.js';
+import systemRoutes from './routes/test.js';
 
 // Create an Express application
 const app = express();
@@ -24,6 +25,7 @@ app.use('/', homeRoutes); //add auth
 app.use('/api/agents', agentRoutes); //add auth
 app.use('/api/contracts', contractRoutes); //add auth
 app.use('/api/maps', mapRoutes); //add auth
+app.use('/api/systems', systemRoutes); //add auth
 
 // Sets 404 error message if request contains an invalid route and sends to next middleware function in the stack
 app.use((req, res, next) => {
