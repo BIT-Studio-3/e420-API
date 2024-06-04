@@ -12,7 +12,7 @@ const register = async (req, res) => {
     }
 
     // Store given data
-    const { username, password } = req.body;
+    const { username, password, confirm_password } = req.body;
 
     // Define an array of required fields
     const requiredFields = ["username", "password", "confirm_password"];
