@@ -21,16 +21,16 @@ const getAgents = async (req, res) => {
           equals: req.query.username || undefined,
         },
         credits: {
-          equals: req.query.credits || undefined,
+          equals: Number(req.query.credits) || undefined,
         },
         ships: {
           equals: req.query.ships || undefined,
         },
         contracts: {
-          equals: req.query.contracts || undefined,
+          equals: req.query.contracts  || undefined,
         },
         shipCount: {
-          equals: req.query.shipCount || undefined,
+          equals: Number(req.query.shipCount) || undefined,
         },
       };
     }
