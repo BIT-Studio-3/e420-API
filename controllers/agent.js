@@ -23,7 +23,7 @@ const getAgents = async (req, res) => {
 
   const getAgent = async (req, res) => {
     try {
-      const agent = await prisma.agent.findUnique({
+      const agent = await prisma.user.findUnique({
         where: { id: Number(req.params.id) },
       });
   
