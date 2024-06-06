@@ -9,6 +9,7 @@ const router = express.Router();
 
 // Create a GET route
 router.get("/", (req, res) => resources.getAgents(req, res));
+router.get("/:id", (req, res) => resources.getAgent(req, res));
 
 // Export the router
 export default router;

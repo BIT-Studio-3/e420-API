@@ -20,4 +20,26 @@ const getAgents = async (req, res) => {
       });
     }
   };
-export { getAgents };
+
+  const getAgent = async (req, res) => {
+    try {
+      const agent = await prisma.agent.findUnique({
+        where: { id: Number(req.params.id) },
+      });
+  
+      if (!agent) {
+        return res
+          .status(404)
+          .json({ msg: `No agent with the id: ${req.params.id} found` });
+      }
+  
+      return res.json({
+        data: agent,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        msg: err.message,
+      });
+    }
+  };
+export { getAgents, getAgent };
