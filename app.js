@@ -5,10 +5,10 @@ import express, { urlencoded, json } from "express";
 import cors from 'cors';
 
 // Import the routes
-import homeRoutes from './routes/home.js';
 import agentRoutes from './routes/agent.js';
 import contractRoutes from './routes/contract.js';
-import systemRoutes from './routes/test.js';
+import locationRoutes from './routes/location.js';
+import authRoutes from './routes/auth.js';
 
 // Create an Express application
 const app = express();
@@ -20,10 +20,11 @@ app.use(json());
 app.use(cors());
 
 // Use the routes module
-app.use('/', homeRoutes);
 app.use('/api/agents', agentRoutes); //add auth
 app.use('/api/contracts', contractRoutes); //add auth
-app.use('/api/systems', systemRoutes); //add auth
+app.use('/api/location', locationRoutes); //add auth
+app.use('/api/auth', authRoutes);
+
 
 // Sets 404 error message if request contains an invalid route and sends to next middleware function in the stack
 app.use((req, res, next) => {
