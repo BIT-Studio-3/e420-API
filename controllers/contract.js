@@ -41,8 +41,10 @@ const getContracts = async (req, res) => {
         // get all the contracts associated with the user id
         const contracts = await prisma.contract.findMany({
             //query to get user specific contracts
-            where: id === req.params.userId,
+            where: userId == Number(req.params.userId),
+            terms: true,
         });
+
         // error handling for finding no contracts
         if (contracts.length === 0) {
             return res.status(404).json({ msg: "No contracts found"})
