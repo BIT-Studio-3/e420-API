@@ -106,9 +106,12 @@ const login = async (req, res) => {
       { expiresIn: JWT_LIFETIME }
     );
 
+    delete user.password;
+
     return res.status(200).json({
       msg: `${user.username} has successfully logged in`,
       token: token,
+      data: user,
     });
   } catch (err) {
     return res.status(500).json({

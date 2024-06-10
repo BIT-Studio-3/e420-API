@@ -4,11 +4,6 @@ const prisma = new PrismaClient();
 const getAgents = async (req, res) => {
   try {
     const query = {
-      // username,
-      // credits,
-      // ships,
-      // contracts,
-      // shipCount,
       include: {
         ships: true,
         contracts: true,
@@ -56,14 +51,16 @@ const getAgents = async (req, res) => {
 
 const getAgent = async (req, res) => {
   try {
+    const { id } = req.user;
+
     const agent = await prisma.user.findUnique({
-      where: { id: Number(req.params.id) },
+      where: { id: Number(id) },
     });
 
     if (!agent) {
       return res
         .status(404)
-        .json({ msg: `No agent with the id: ${req.params.id} found` });
+        .json({ msg: `No agent with the id: ${id} found` });
     }
 
     return res.json({
