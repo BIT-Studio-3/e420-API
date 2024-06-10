@@ -41,10 +41,6 @@ const getAgents = async (req, res) => {
       return res.status(404).json({ msg: "No agents found" });
     }
 
-    if (agents.contracts === 0) {
-      return res.status(404).json({ msg: "No contracts found" });
-    }
-
     //If agents are found, return a 200 success response with the agents data
     return res
       .status(200)
@@ -57,6 +53,7 @@ const getAgents = async (req, res) => {
     });
   }
 };
+
 const getAgent = async (req, res) => {
   try {
     const agent = await prisma.user.findUnique({
