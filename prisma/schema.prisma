@@ -59,6 +59,7 @@ model Waypoint {
   traits          Trait[]
   shipyard        Shipyard[]
   destinations    Contract[]
+  agents          User[]
   systemId        Int
   system          System      @relation(fields: [systemId], references: [id], onDelete: Cascade)  
 }
@@ -71,6 +72,8 @@ model User {
   ships           Ship[]
   contracts       Contract[]
   shipCount       Int         @default(0)
+  waypointId      Int
+  currentLocation Waypoint    @relation(fields: [waypointId], references: [id], onDelete: Cascade)
 }
 
 model Shipyard {
@@ -98,7 +101,7 @@ model Contract {
   destinationSymbol   String
   accepted            Boolean         @default(false)
   fulfilled           Boolean         @default(false)
-  deadlineToAccept    String
+  deadlineToAccept    String          
   user                User            @relation(fields: [userId], references: [id])
   destination         Waypoint        @relation(fields: [destinationSymbol], references: [name])
 }
