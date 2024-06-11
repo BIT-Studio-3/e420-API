@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient()
 
-const seeds = ["./data/01-systemSeed.js", "./data/02-waypointSeed.js"]
+const seeds = ["./data/01-systemSeed.js", "./data/02-waypointSeed.js", "./data/03-agentSeed.js", "./data/04-contractSeed.js", "./data/05-termsSeed.js"]
 
 /**
 * Seeds data in JSON format from any file provided in the seeds variable
