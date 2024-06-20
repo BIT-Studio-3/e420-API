@@ -72,8 +72,8 @@ model User {
   ships           Ship[]
   contracts       Contract[]
   shipCount       Int         @default(0)
-  waypointId      Int
-  currentLocation Waypoint    @relation(fields: [waypointId], references: [id], onDelete: Cascade)
+  waypointName    String      @default("Nama")         
+  currentLocation Waypoint    @relation(fields: [waypointName], references: [name], onDelete: Cascade)
 }
 
 model Shipyard {
