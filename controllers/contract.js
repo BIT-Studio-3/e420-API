@@ -3,6 +3,13 @@ const prisma = new PrismaClient();
 
 const createContract = async (req, res) => {
   try {
+    const contentType = req.headers["content-type"];
+    if (!contentType || contentType !== "application/json") {
+      return res.status(400).json({
+        msg: "Invalid Content-Type. Expected application/json",
+      });
+    }
+
     // Store given data
     const {
       userId,
@@ -15,10 +22,12 @@ const createContract = async (req, res) => {
       deadlineToAccept,
     } = req.body;
 
+    const { id } = req.user;
+
     // Create new contract with the given data
     const contract = await prisma.contract.create({
       data: {
-        userId,
+        userId: Number(id),
         type,
         terms: {
           create: [deadline, payment, cargo, contractId],
@@ -28,10 +37,16 @@ const createContract = async (req, res) => {
       },
     });
 
+    const newContracts = await prisma.contract.findMany({
+      include: {
+        terms: true,
+      },
+    });
+
     // Return success or error message
     return res.status(201).json({
       msg: "Contract successfully created",
-      data: contract,
+      data: newContracts,
     });
   } catch (err) {
     return res.status(500).json({

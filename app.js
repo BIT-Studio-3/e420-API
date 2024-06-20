@@ -9,6 +9,7 @@ import agentRoutes from './routes/agent.js';
 import contractRoutes from './routes/contract.js';
 import locationRoutes from './routes/location.js';
 import authRoutes from './routes/auth.js';
+import authRouteMiddleware from "./middleware/authRoute.js";
 
 // Create an Express application
 const app = express();
@@ -20,8 +21,8 @@ app.use(json());
 app.use(cors());
 
 // Use the routes module
-app.use('/api/agents', agentRoutes); //add auth
-app.use('/api/contracts', contractRoutes); //add auth
+app.use('/api/agents', authRouteMiddleware, agentRoutes);
+app.use('/api/contracts', authRouteMiddleware, contractRoutes);
 app.use('/api/location', locationRoutes); //add auth
 app.use('/api/auth', authRoutes);
 

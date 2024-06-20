@@ -54,6 +54,8 @@ const register = async (req, res) => {
       },
     });
 
+    delete user.password;
+
     // Return success or error message
     return res.status(201).json({
       msg: "User successfully registered",
@@ -79,7 +81,7 @@ const login = async (req, res) => {
 
     // Check if given data is used already by another user
     const user = await prisma.user.findUnique({
-      where: { username },
+      where: { username: username },
     });
 
     if (!user) return res.status(401).json({ msg: "Invalid username" });
@@ -106,9 +108,12 @@ const login = async (req, res) => {
       { expiresIn: JWT_LIFETIME }
     );
 
+    delete user.password;
+
     return res.status(200).json({
       msg: `${user.username} has successfully logged in`,
       token: token,
+      data: user,
     });
   } catch (err) {
     return res.status(500).json({
