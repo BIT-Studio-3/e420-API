@@ -1,1 +1,1 @@
-# RESTful API For SpaceTraders Project
+# RESTful API based on the SpaceTraders project
